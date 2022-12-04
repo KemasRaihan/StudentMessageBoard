@@ -9,24 +9,28 @@ public class LoginRequest extends Request {
     private static final String _class =
             LoginRequest.class.getSimpleName();
 
-    private String name;
+    private String login;
+    private String password;
 
     // Constructor; throws NullPointerException if name is null.
-    public LoginRequest(String name) {
+    public LoginRequest(String login, String password) {
         // check for null
-        if (name == null)
+        if (login == null)
             throw new NullPointerException();
-        this.name = name;
+        this.login = login;
+        this.password = password;
     }
 
-    String getName() { return name; }
+    String getLogin() { return login; }
+    String getPassword() { return password; }
 
     // Serializes this object into a JSONObject
     @SuppressWarnings("unchecked")
     public Object toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("_class", _class);
-        obj.put("name", name);
+        obj.put("login", login);
+        obj.put("password", password);
         return obj;
     }
 
@@ -40,9 +44,11 @@ public class LoginRequest extends Request {
             if (!_class.equals(obj.get("_class")))
                 return null;
             // deserialize login name
-            String name = (String)obj.get("name");
+            String login = (String)obj.get("login");
+            // deserialize password
+            String password = (String)obj.get("password");
             // construct the object to return (checking for nulls)
-            return new LoginRequest(name);
+            return new LoginRequest(login, password);
         } catch (ClassCastException | NullPointerException e) {
             return null;
         }

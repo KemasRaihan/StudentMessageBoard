@@ -41,8 +41,12 @@ public class MessageBoardClient {
                 Scanner sc = new Scanner(userInput);
                 try {
                     switch (sc.next()) {
+                        case "create":
+                            req = new CreateRequest();
+                            break;
                         case "login":
-                            req = new LoginRequest(sc.skip(" ").nextLine());
+                            String password = "";
+                            req = new LoginRequest(sc.skip(" ").nextLine(), password);
                             break;
                         case "post":
                             req = new PostRequest(sc.skip(" ").nextLine());
@@ -73,6 +77,13 @@ public class MessageBoardClient {
                 // Parse JSON response, then try to deserialize JSON
                 Object json = JSONValue.parse(serverResponse);
                 Response resp;
+
+                if((resp = CreateResponse.fromJSON(json))!=null){
+                    do{
+                        ((CreateResponse)resp).enterNewLogin(input);
+
+                    }while(true);
+                }
 
                 if(LoginResponse.fromJSON(json)!=null){
                     System.out.println("You have successfully logged in!");
@@ -109,5 +120,10 @@ public class MessageBoardClient {
                     hostName);
             System.exit(1);
         }
+    }
+
+    public static void main(String[] args) throws IOException{
+       MessageBoardClient client = new MessageBoardClient();
+       client.message();
     }
 }

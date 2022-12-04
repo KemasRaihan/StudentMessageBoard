@@ -2,6 +2,8 @@ package network;
 
 import org.json.simple.JSONObject;
 
+import java.util.Scanner;
+
 public class CreateResponse extends Response{
     // class name to be used as tag in JSON representation
     private static final String _class =
@@ -10,6 +12,21 @@ public class CreateResponse extends Response{
 
     // Constructor; throws NullPointerException if name is null.
     public CreateResponse() {}
+
+
+    // create new account
+    public String enterNewLogin(Scanner input){
+        System.out.print("Enter login: ");
+        String login = input.next();
+        return login;
+
+    }
+
+    public String enterNewPassword(Scanner input){
+        System.out.print("Enter password: ");
+        String password = input.next();
+        return password;
+    }
 
 
     // Serializes this object into a JSONObject

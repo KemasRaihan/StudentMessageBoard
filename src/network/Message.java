@@ -10,11 +10,11 @@ public class Message {
             Message.class.getSimpleName();
 
     private final String body;
-    private final String author;
+    private final User author;
     private final long   timestamp;
 
     // Constructor; throws NullPointerException if arguments are null
-    public Message(String body, String author, long timestamp) {
+    public Message(String body, User author, long timestamp) {
         if (body == null || author == null)
             throw new NullPointerException();
         this.body      = body;
@@ -23,7 +23,7 @@ public class Message {
     }
 
     public String getBody()      { return body; }
-    public String getAuthor()    { return author; }
+    public User getAuthor()    { return author; }
     public long   getTimestamp() { return timestamp; }
 
     public String toString() {
@@ -55,7 +55,7 @@ public class Message {
                 return null;
             // deserialize message fields (checking timestamp for null)
             String body      = (String)obj.get("body");
-            String author    = (String)obj.get("author");
+            User author    = (User)obj.get("author");
             long   timestamp = (long)obj.get("timestamp");
             // construct the object to return (checking for nulls)
             return new Message(body, author, timestamp);

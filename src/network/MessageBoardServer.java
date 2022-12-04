@@ -8,13 +8,34 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MessageBoardServer {
 
     static Scanner input = new Scanner(System.in);
+
+    // start server
+
+    public void start(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Please enter a port number: ");
+        int portNumber = input.nextInt();
+
+        try (
+                ServerSocket serverSocket = new ServerSocket(portNumber);
+        ) {
+            System.out.println("Server started!");
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                new ClientHandler(clientSocket).start();
+            }
+        } catch (IOException e) {
+            System.out.println("Exception listening for connection on port " +
+                    portNumber);
+            System.out.println(e.getMessage());
+        }
+    }
 
 
     static class Clock {
@@ -28,6 +49,7 @@ public class MessageBoardServer {
 
 
     static class ClientHandler extends Thread {
+        private static Map<String, User> users = new HashMap<>();
         // shared message board
         private static List<Message> board = new ArrayList<Message>();
 
@@ -38,7 +60,7 @@ public class MessageBoardServer {
         private int read;
 
         // login name; null if not set
-        private String login;
+        private User login;
 
         // password; null if not set
         private String password;
@@ -72,15 +94,9 @@ public class MessageBoardServer {
                     if (login == null &&
                             (req = CreateRequest.fromJSON(json)) != null) {
 
-
-                        // set login name
-                        login = ((CreateRequest)req).enterNewLogin(input);
-
-                        // set password
-                        password = ((CreateRequest)req).enterNewPassword(input);
-                        // response acknowledging the login request
-
                         out.println(new CreateResponse());
+
+                        users.put();
                         System.out.println(login + " logged in");
                         continue;
                     }
@@ -89,7 +105,7 @@ public class MessageBoardServer {
                     if (login == null &&
                             (req = LoginRequest.fromJSON(json)) != null) {
                         // set login name
-                        login = ((LoginRequest)req).getName();
+                        login = ((LoginRequest)req).getLogin();
                         // response acknowledging the login request
                         out.println(new LoginResponse());
                         System.out.println(login + " logged in");
@@ -150,25 +166,11 @@ public class MessageBoardServer {
         }
     }
 
-
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-
-        System.out.println("Please enter a port number: ");
-        int portNumber = input.nextInt();
-
-        try (
-                ServerSocket serverSocket = new ServerSocket(portNumber);
-        ) {
-            System.out.println("Server started!");
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                new ClientHandler(clientSocket).start();
-            }
-        } catch (IOException e) {
-            System.out.println("Exception listening for connection on port " +
-                    portNumber);
-            System.out.println(e.getMessage());
-        }
+        MessageBoardServer server = new MessageBoardServer();
+        server.start();
     }
+
+
+
 }
