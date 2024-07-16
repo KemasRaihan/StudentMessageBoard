@@ -1,4 +1,4 @@
-package network;// Solution to Week 8 Exercises
+package main;// Solution to Week 8 Exercises
 
 // compile: javac -cp json-simple-1.1.1.jar;. ErrorResponse.java
 
@@ -19,7 +19,7 @@ public class ErrorResponse extends Response {
         this.error = error;
     }
 
-    public String getError() { return error; }
+    public String getError() { return "ERROR: " + error; }
 
     // Serializes this object into a JSONObject
     @SuppressWarnings("unchecked")

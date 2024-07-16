@@ -1,11 +1,11 @@
-package network;// Solution to Week 8 Exercises
+package main;// Week 18 Exercises
 
-// compile: javac -cp json-simple-1.1.1.jar;. Response.java
+// compile: javac -cp json-simple-1.1.1.jar;. Request.java
 
 import org.json.simple.*;
 
-// Abstract super class for all responses
-public abstract class Response implements JSONAware {
+// Abstract super class for all requests
+public abstract class Request implements JSONAware {
     // Serializes this object into a JSONObject
     public abstract Object toJSON();
 

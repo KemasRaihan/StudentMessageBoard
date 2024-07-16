@@ -1,8 +1,10 @@
-package network;// Solution to Week 8 Exercise 2 and 3
+package main;// Solution to Week 8 Exercise 2 and 3
 
 // compile: javac -cp json-simple-1.1.1.jar;. Message.java
 
 import org.json.simple.*;
+
+import java.time.LocalDateTime;
 
 public class Message {
     // class name to be used as tag in JSON representation
@@ -10,11 +12,11 @@ public class Message {
             Message.class.getSimpleName();
 
     private final String body;
-    private final User author;
-    private final long   timestamp;
+    private final String author;
+    private final String timestamp;
 
     // Constructor; throws NullPointerException if arguments are null
-    public Message(String body, User author, long timestamp) {
+    public Message(String body, String author, String timestamp) {
         if (body == null || author == null)
             throw new NullPointerException();
         this.body      = body;
@@ -23,8 +25,8 @@ public class Message {
     }
 
     public String getBody()      { return body; }
-    public User getAuthor()    { return author; }
-    public long   getTimestamp() { return timestamp; }
+    public String getAuthor()    { return author; }
+    public String   getTimestamp() { return timestamp; }
 
     public String toString() {
         return author + ": " + body + " (" + timestamp + ")";
@@ -55,8 +57,8 @@ public class Message {
                 return null;
             // deserialize message fields (checking timestamp for null)
             String body      = (String)obj.get("body");
-            User author    = (User)obj.get("author");
-            long   timestamp = (long)obj.get("timestamp");
+            String author    = (String)obj.get("author");
+            String   timestamp = (String)obj.get("timestamp");
             // construct the object to return (checking for nulls)
             return new Message(body, author, timestamp);
         } catch (ClassCastException | NullPointerException e) {

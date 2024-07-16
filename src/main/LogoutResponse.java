@@ -1,16 +1,16 @@
-package network;// Solution to Week 8 Exercise 4
+package main;
 
-// compile: javac -cp json-simple-1.1.1.jar;. SuccessResponse.java
+import org.json.simple.JSONObject;
 
-import org.json.simple.*;
-
-public class SuccessResponse extends Response {
+public class LogoutResponse extends Response{
     // class name to be used as tag in JSON representation
     private static final String _class =
-            SuccessResponse.class.getSimpleName();
+            LogoutResponse.class.getSimpleName();
 
-    // Constructor; no arguments as there are no instance fields
-    public SuccessResponse() {}
+
+    // Constructor; throws NullPointerException if name is null.
+    public LogoutResponse() {}
+
 
     // Serializes this object into a JSONObject
     @SuppressWarnings("unchecked")
@@ -20,17 +20,18 @@ public class SuccessResponse extends Response {
         return obj;
     }
 
-    // Tries to deserialize a SuccessResponse instance from a JSONObject.
+    // Tries to deserialize a LoginRequest instance from a JSONObject.
     // Returns null if deserialization was not successful (e.g. because a
     // different object was serialized).
-    public static SuccessResponse fromJSON(Object val) {
+    public static LogoutResponse fromJSON(Object val) {
         try {
             JSONObject obj = (JSONObject)val;
             // check for _class field matching class name
             if (!_class.equals(obj.get("_class")))
                 return null;
-            // construct the new object to return
-            return new SuccessResponse();
+
+            // construct the object to return (checking for nulls)
+            return new LogoutResponse();
         } catch (ClassCastException | NullPointerException e) {
             return null;
         }

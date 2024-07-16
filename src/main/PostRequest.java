@@ -1,4 +1,4 @@
-package network;// Solution to Week 8 Homework Exercise 4
+package main;// Solution to Week 8 Homework Exercise 4
 
 // compile: javac -cp json-simple-1.1.1.jar;. PostRequest.java
 

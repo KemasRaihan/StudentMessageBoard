@@ -1,44 +1,37 @@
-package network;
+package main;
 
 import org.json.simple.JSONObject;
 
-public class User {
-    private String name;
-    private String password;
-
+public class ViewChannelsRequest extends Request{
+    // class name to be used as tag in JSON representation
     private static final String _class =
-            User.class.getSimpleName();
+            ViewChannelsRequest.class.getSimpleName();
 
-    public User(String name, String password) {
-        if(name==null || password==null)
-            throw new NullPointerException();
-        this.name=name;
-        this.password=password;
+    // Constructor; throws NullPointerException if name is null.
+    public ViewChannelsRequest() {
+
     }
+
+
     // Serializes this object into a JSONObject
     @SuppressWarnings("unchecked")
     public Object toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("_class",    _class);
-        obj.put("name",      name);
-        obj.put("password",    password);
+        obj.put("_class", _class);
         return obj;
     }
 
-    // Tries to deserialize a Message instance from a JSONObject.
+    // Tries to deserialize a CreateChannelRequest instance from a JSONObject.
     // Returns null if deserialization was not successful (e.g. because a
     // different object was serialized).
-    public static User fromJSON(Object val) {
+    public static ViewChannelsRequest fromJSON(Object val) {
         try {
             JSONObject obj = (JSONObject)val;
             // check for _class field matching class name
             if (!_class.equals(obj.get("_class")))
                 return null;
-            // deserialize user fields
-            String name     = (String)obj.get("name");
-            String password    = (String)obj.get("password");
             // construct the object to return (checking for nulls)
-            return new User(name, password);
+            return new ViewChannelsRequest();
         } catch (ClassCastException | NullPointerException e) {
             return null;
         }

@@ -1,16 +1,26 @@
-package network;// Solution to Week 8 Homework Exercise 4
+package main;
 
-// compile: javac -cp json-simple-1.1.1.jar;. ReadRequest.java
+import org.json.simple.JSONObject;
 
-import org.json.simple.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-public class ReadRequest extends Request {
+public class SubscribeResponse extends Response{
+
+    Scanner input = new Scanner(System.in);
     // class name to be used as tag in JSON representation
     private static final String _class =
-            ReadRequest.class.getSimpleName();
+           SubscribeResponse.class.getSimpleName();
 
-    // Constructor; no arguments as there are no instance fields
-    public ReadRequest() {}
+
+    // Constructor; throws NullPointerException if name is null.
+    public SubscribeResponse() {}
+
+
+    public SubscribeRequest subscribeToChannel(Channel channel, User user){
+        return new SubscribeRequest(channel, user);
+    }
+
 
     // Serializes this object into a JSONObject
     @SuppressWarnings("unchecked")
@@ -20,17 +30,18 @@ public class ReadRequest extends Request {
         return obj;
     }
 
-    // Tries to deserialize a ReadRequest instance from a JSONObject.
+    // Tries to deserialize a LoginRequest instance from a JSONObject.
     // Returns null if deserialization was not successful (e.g. because a
     // different object was serialized).
-    public static ReadRequest fromJSON(Object val) {
+    public static SubscribeResponse fromJSON(Object val) {
         try {
             JSONObject obj = (JSONObject)val;
             // check for _class field matching class name
             if (!_class.equals(obj.get("_class")))
                 return null;
-            // construct the new object to return
-            return new ReadRequest();
+
+            // construct the object to return (checking for nulls)
+            return new SubscribeResponse();
         } catch (ClassCastException | NullPointerException e) {
             return null;
         }
